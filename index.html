@@ -1,1 +1,158 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBA 2K Cyberface Converter</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#090d16;
+  color:#f4f6fb;
+  font-family:Arial,sans-serif;
+}
+header{
+  padding:25px 16px;
+  text-align:center;
+  background:#111a2b;
+  border-bottom:2px solid #e5a323;
+}
+h1{font-size:23px;margin:0 0 8px}
+header p{color:#aab5c8;margin:0;font-size:13px}
+main{max-width:650px;margin:22px auto;padding:0 15px}
+.panel{
+  background:#141e30;
+  border:1px solid #283750;
+  border-radius:12px;
+  padding:18px;
+  margin-bottom:16px;
+}
+h2{font-size:17px;margin:0 0 15px;color:#f3b63f}
+label{display:block;margin:12px 0 7px;font-size:13px;color:#c7d1e2}
+select,input[type=file]{
+  width:100%;padding:12px;border-radius:8px;
+  background:#0b1220;color:white;
+  border:1px solid #35445e;
+}
+button{
+  width:100%;padding:14px;border:0;border-radius:8px;
+  background:#e5a323;color:#111;font-weight:bold;
+  font-size:15px;margin-top:15px;
+}
+button:disabled{opacity:.5}
+#status,#details{
+  background:#0b1220;padding:13px;border-radius:8px;
+  font-size:13px;line-height:1.7;overflow-wrap:anywhere;
+}
+.warning{
+  color:#ffcf70;font-size:12px;line-height:1.6;
+}
+footer{text-align:center;color:#8290a5;font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>NBA 2K CYBERFACE CONVERTER</h1>
+  <p>NBA 2K14 PC → NBA 2K20 Mobile</p>
+</header>
+
+<main>
+  <section class="panel">
+    <h2>1. Select Cyberface File</h2>
+
+    <label>Source Game</label>
+    <select id="source">
+      <option>NBA 2K14 PC</option>
+    </select>
+
+    <label>Target Game</label>
+    <select id="target">
+      <option>NBA 2K20 Mobile</option>
+    </select>
+
+    <label>Upload IFF File</label>
+    <input type="file" id="file" accept=".iff">
+
+    <button id="inspect">INSPECT IFF FILE</button>
+  </section>
+
+  <section class="panel">
+    <h2>2. File Information</h2>
+    <div id="status">Waiting for IFF file...</div>
+    <div id="details" style="margin-top:12px">
+      File information will appear here.
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>3. Conversion Engine</h2>
+    <p class="warning">
+      The NBA 2K14 PC to NBA 2K20 Mobile conversion engine
+      is not implemented yet. This version only reads basic
+      file information. It does not modify or convert IFF files.
+    </p>
+    <button disabled>CONVERT TO NBA 2K20 MOBILE</button>
+  </section>
+</main>
+
+<footer>
+  NBA 2K Cyberface Converter · Development Version
+</footer>
+
+<script>
+const fileInput = document.getElementById("file");
+const statusBox = document.getElementById("status");
+const details = document.getElementById("details");
+
+document.getElementById("inspect").addEventListener("click", async () => {
+  const file = fileInput.files[0];
+
+  if (!file) {
+    statusBox.textContent = "Please select an IFF file first.";
+    return;
+  }
+
+  if (!file.name.toLowerCase().endsWith(".iff")) {
+    statusBox.textContent = "Please select a .iff file.";
+    return;
+  }
+
+  statusBox.textContent = "Reading file...";
+
+  try {
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    const preview = Array.from(bytes.slice(0, 32))
+      .map(b => b.toString(16).padStart(2, "0").toUpperCase())
+      .join(" ");
+
+    details.innerHTML = `
+      <b>File name:</b> ${escapeHTML(file.name)}<br>
+      <b>File size:</b> ${file.size.toLocaleString()} bytes<br>
+      <b>Size:</b> ${(file.size / 1024).toFixed(2)} KB<br>
+      <b>First 32 bytes:</b><br>
+      ${preview || "Empty file"}
+    `;
+
+    statusBox.textContent =
+      "File loaded successfully. Basic inspection complete.";
+  } catch (error) {
+    statusBox.textContent = "Could not read this file.";
+    details.textContent = error.message;
+  }
+});
+
+function escapeHTML(value) {
+  return value.replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;",
+    '"':"&quot;", "'":"&#39;"
+  })[char]);
+}
+</script>
+
+</body>
+</html>
+
