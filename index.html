@@ -8,28 +8,64 @@
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:#090d16;
   color:#f4f6fb;
   font-family:Arial,sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(229,163,35,.20), transparent 38%),
+    radial-gradient(ellipse at 8% 35%, rgba(39,76,130,.24), transparent 34%),
+    radial-gradient(ellipse at 92% 68%, rgba(39,76,130,.18), transparent 32%),
+    linear-gradient(160deg,#070b14 0%,#101a2d 48%,#080d18 100%);
+  background-attachment:fixed;
+  position:relative;
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.17;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 54px, rgba(255,255,255,.035) 55px 56px),
+    repeating-linear-gradient(90deg, transparent 0 54px, rgba(255,255,255,.025) 55px 56px);
+  z-index:-1;
 }
 header{
-  padding:25px 16px;
+  padding:30px 16px 27px;
   text-align:center;
-  background:#111a2b;
+  background:
+    linear-gradient(180deg,rgba(9,15,28,.72),rgba(17,26,43,.96)),
+    radial-gradient(ellipse at 50% 0%,rgba(229,163,35,.28),transparent 65%);
   border-bottom:2px solid #e5a323;
+  box-shadow:0 10px 35px rgba(0,0,0,.28);
 }
 h1{font-size:23px;margin:0 0 8px}
 header p{color:#aab5c8;margin:0;font-size:13px}
 main{max-width:650px;margin:22px auto;padding:0 15px}
 .panel{
-  background:#141e30;
-  border:1px solid #283750;
-  border-radius:12px;
+  background:linear-gradient(145deg,rgba(23,34,55,.96),rgba(14,23,40,.96));
+  border:1px solid rgba(92,119,158,.38);
+  border-radius:15px;
   padding:18px;
   margin-bottom:16px;
+  box-shadow:0 12px 32px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.035);
+  backdrop-filter:blur(5px);
 }
 h2{font-size:17px;margin:0 0 15px;color:#f3b63f}
 label{display:block;margin:12px 0 7px;font-size:13px;color:#c7d1e2}
+.resolution-title{margin-top:18px}
+.resolution-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:9px}
+.resolution-option{
+  display:block;border:1px solid #3b4c68;border-radius:10px;
+  padding:13px;background:#0b1424;cursor:pointer;margin:0;
+}
+.resolution-option:has(input:checked){
+  border-color:#e5a323;box-shadow:0 0 0 1px rgba(229,163,35,.28);
+  background:linear-gradient(145deg,#202b3d,#111b2d);
+}
+.resolution-option input{accent-color:#e5a323}
+.resolution-option strong{display:block;color:#f5bd4d;margin:5px 0}
+.resolution-option small{display:block;color:#aab7cb;line-height:1.45;font-size:11px}
+@media(max-width:380px){.resolution-options{grid-template-columns:1fr}}
 select,input[type=file]{
   width:100%;padding:12px;border-radius:8px;
   background:#0b1220;color:white;
@@ -88,10 +124,23 @@ footer{text-align:center;color:#8290a5;font-size:12px;padding:20px}
 
   <section class="panel">
     <h2>3. Conversion Engine</h2>
-    <p class="warning">
-      The NBA2K14 PC to NBA2K20 Mobile conversion engine
-      is not implemented yet. This version only reads basic
-      file information. It does not modify or convert IFF files.
+    <label class="resolution-title">Output Texture Resolution</label>
+    <div class="resolution-options">
+      <label class="resolution-option">
+        <input type="radio" name="resolution" value="SD" checked>
+        <strong>SD</strong>
+        <small>Standard Definition · smaller texture size</small>
+      </label>
+      <label class="resolution-option">
+        <input type="radio" name="resolution" value="HD">
+        <strong>HD</strong>
+        <small>High Definition · higher texture detail</small>
+      </label>
+    </div>
+    <p class="warning" style="margin-top:14px">
+      SD and HD are selection options in this development preview.
+      The NBA2K14 PC to NBA2K20 Mobile conversion engine is not
+      implemented yet, so this page does not modify or convert IFF files.
     </p>
     <button disabled>CONVERT TO NBA 2K20 MOBILE</button>
   </section>
