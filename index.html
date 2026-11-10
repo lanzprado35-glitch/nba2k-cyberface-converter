@@ -53,7 +53,7 @@ main{max-width:650px;margin:22px auto;padding:0 15px}
 h2{font-size:17px;margin:0 0 15px;color:#f3b63f}
 label{display:block;margin:12px 0 7px;font-size:13px;color:#c7d1e2}
 .resolution-title{margin-top:18px}
-.resolution-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:9px}
+.resolution-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:9px}
 .resolution-option{
   display:block;border:1px solid #3b4c68;border-radius:10px;
   padding:13px;background:#0b1424;cursor:pointer;margin:0;
@@ -65,7 +65,7 @@ label{display:block;margin:12px 0 7px;font-size:13px;color:#c7d1e2}
 .resolution-option input{accent-color:#e5a323}
 .resolution-option strong{display:block;color:#f5bd4d;margin:5px 0}
 .resolution-option small{display:block;color:#aab7cb;line-height:1.45;font-size:11px}
-@media(max-width:380px){.resolution-options{grid-template-columns:1fr}}
+@media(max-width:420px){.resolution-options{grid-template-columns:1fr}}
 select,input[type=file]{
   width:100%;padding:12px;border-radius:8px;
   background:#0b1220;color:white;
@@ -135,6 +135,11 @@ footer{text-align:center;color:#8290a5;font-size:12px;padding:20px}
         <input type="radio" name="resolution" value="HD">
         <strong>HD</strong>
         <small>High Definition · higher texture detail</small>
+      </label>
+      <label class="resolution-option">
+        <input type="radio" name="resolution" value="2K">
+        <strong>2K</strong>
+        <small>2048 × 2048 · only if supported by the target game</small>
       </label>
     </div>
     <p class="warning" style="margin-top:14px">
